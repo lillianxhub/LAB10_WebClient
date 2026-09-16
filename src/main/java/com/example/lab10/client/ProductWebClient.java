@@ -14,11 +14,11 @@ import reactor.core.publisher.Mono;
  * ❌ TODO: เติม method body ที่เหลือ (70%)
  *
  * WebClient method chain:
- *   client.get()              ← HTTP method
- *     .uri("/products/{id}", id)  ← URL
- *     .retrieve()             ← เริ่มรับ response
- *     .bodyToMono(T.class)    ← แปลงเป็น Mono<T>
- *     .bodyToFlux(T.class)    ← แปลงเป็น Flux<T>
+ * client.get() ← HTTP method
+ * .uri("/products/{id}", id) ← URL
+ * .retrieve() ← เริ่มรับ response
+ * .bodyToMono(T.class) ← แปลงเป็น Mono<T>
+ * .bodyToFlux(T.class) ← แปลงเป็น Flux<T>
  */
 @Component
 public class ProductWebClient {
@@ -50,13 +50,16 @@ public class ProductWebClient {
      * TODO: ดึง Product ทั้งหมดจาก server
      *
      * Hint: client.get()
-     *         .uri("/products")
-     *         .retrieve()
-     *         .bodyToFlux(Product.class)
+     * .uri("/products")
+     * .retrieve()
+     * .bodyToFlux(Product.class)
      */
     public Flux<Product> getAllProducts() {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        return client.get()
+                .uri("/products")
+                .retrieve()
+                .bodyToFlux(Product.class); // ← แก้บรรทัดนี้
     }
 
     /**
@@ -64,14 +67,17 @@ public class ProductWebClient {
      * TODO: ส่ง Product ใหม่ไปยัง server
      *
      * Hint: client.post()
-     *         .uri("/products")
-     *         .bodyValue(product)   ← ส่ง body
-     *         .retrieve()
-     *         .bodyToMono(Product.class)
+     * .uri("/products")
+     * .bodyValue(product) ← ส่ง body
+     * .retrieve()
+     * .bodyToMono(Product.class)
      */
     public Mono<Product> createProduct(Product product) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        return client.post()
+                .uri("/products")
+                .retrieve()
+                .bodyToMono(Product.class); // ← แก้บรรทัดนี้
     }
 
     /**
@@ -79,13 +85,16 @@ public class ProductWebClient {
      * TODO: ส่ง request ลบ Product
      *
      * Hint: client.delete()
-     *         .uri("/products/{id}", id)
-     *         .retrieve()
-     *         .bodyToMono(Void.class)
+     * .uri("/products/{id}", id)
+     * .retrieve()
+     * .bodyToMono(Void.class)
      */
     public Mono<Void> deleteProduct(String id) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        return client.delete()
+                .uri("/products/{id}", id)
+                .retrieve()
+                .bodyToMono(Void.class); // ← แก้บรรทัดนี้
     }
 
     /**
@@ -93,28 +102,35 @@ public class ProductWebClient {
      * TODO: ดึง Product ตาม category
      *
      * Hint: client.get()
-     *         .uri("/products/category/{category}", category)
-     *         .retrieve()
-     *         .bodyToFlux(Product.class)
+     * .uri("/products/category/{category}", category)
+     * .retrieve()
+     * .bodyToFlux(Product.class)
      */
     public Flux<Product> getByCategory(String category) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        return client.get()
+                .uri("/products/category/{category}", category)
+                .retrieve()
+                .bodyToFlux(Product.class); // ← แก้บรรทัดนี้
     }
 
     /**
      * GET /products/{id}/price → Mono<Double>
      * TODO: ดึงราคาหลังส่วนลด
-     *       แล้ว chain .doOnNext() เพื่อ log ราคาที่ได้
+     * แล้ว chain .doOnNext() เพื่อ log ราคาที่ได้
      *
      * Hint: client.get()
-     *         .uri("/products/{id}/price", id)
-     *         .retrieve()
-     *         .bodyToMono(Double.class)
-     *         .doOnNext(price -> System.out.println("Price: " + price))
+     * .uri("/products/{id}/price", id)
+     * .retrieve()
+     * .bodyToMono(Double.class)
+     * .doOnNext(price -> System.out.println("Price: " + price))
      */
     public Mono<Double> getDiscountedPrice(String id) {
         // TODO: เติม code ตรงนี้
-        return null; // ← แก้บรรทัดนี้
+        return client.get()
+                .uri("/products/{id}/price", id)
+                .retrieve()
+                .bodyToMono(Double.class)
+                .doOnNext(price -> System.out.println("Price: " + price)); // ← แก้บรรทัดนี้
     }
 }
